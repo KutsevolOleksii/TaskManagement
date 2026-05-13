@@ -1,0 +1,222 @@
+﻿<Window x:Class="TaskManager.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Task Manager"
+        Height="600"
+        Width="1000"
+        WindowStartupLocation="CenterScreen"
+        Background="#1E1E1E">
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar -->
+        <Border Background="#252526"
+                Padding="15">
+
+            <StackPanel>
+
+                <TextBlock Text="Task Manager"
+                        FontSize="26"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        Margin="0 0 0 20"/>
+
+                <TextBlock Text="Task Title"
+                        Foreground="White"/>
+
+                <TextBox x:Name="TaskTitleTextBox"
+                        Height="30"
+                        Margin="0 5 0 15"/>
+
+                <TextBlock Text="Description"
+                        Foreground="White"/>
+
+                <TextBox x:Name="DescriptionTextBox"
+                        Height="80"
+                        TextWrapping="Wrap"
+                        AcceptsReturn="True"
+                        Margin="0 5 0 15"/>
+
+                <TextBlock Text="Priority"
+                        Foreground="White"/>
+
+                <ComboBox x:Name="PriorityComboBox"
+                        Height="30"
+                        Margin="0 5 0 15">
+
+                    <ComboBoxItem Content="Low"/>
+                    <ComboBoxItem Content="Medium"/>
+                    <ComboBoxItem Content="High"/>
+                </ComboBox>
+
+                <TextBlock Text="Task Type"
+                        Foreground="White"/>
+
+                <ComboBox x:Name="TypeComboBox"
+                        Height="30"
+                        Margin="0 5 0 15">
+
+                    <ComboBoxItem Content="Personal"/>
+                    <ComboBoxItem Content="Work"/>
+                    <ComboBoxItem Content="Study"/>
+                    <ComboBoxItem Content="Urgent"/>
+                </ComboBox>
+
+                <TextBlock Text="Deadline Date"
+                        Foreground="White"/>
+
+                <DatePicker x:Name="DeadlinePicker"
+                            Height="30"
+                            Margin="0 5 0 10"/>
+
+                <TextBlock Text="Deadline Time"
+                        Foreground="White"/>
+
+                <TextBox x:Name="DeadlineTimeTextBox"
+                        Height="30"
+                        Margin="0 5 0 20"
+                        Text="12:00"/>
+
+                <Button Content="Add Task"
+                        Height="40"
+                        Background="#007ACC"
+                        Foreground="White"
+                        FontWeight="Bold"
+                        Click="AddTask_Click"/>
+
+                <Button Content="Update Selected"
+                        Height="40"
+                        Margin="0 10 0 0"
+                        Background="#FF9800"
+                        Foreground="White"
+                        FontWeight="Bold"
+                        Click="UpdateTask_Click"/>
+
+                <Button Content="Delete Selected"
+                        Height="40"
+                        Margin="0 10 0 0"
+                        Background="#C74646"
+                        Foreground="White"
+                        FontWeight="Bold"
+                        Click="DeleteTask_Click"/>
+
+                <Button Content="Toggle Complete"
+                        Height="40"
+                        Margin="0 10 0 0"
+                        Background="#4CAF50"
+                        Foreground="White"
+                        FontWeight="Bold"
+                        Click="ToggleComplete_Click"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Area -->
+        <Grid Grid.Column="1"
+            Margin="15">
+
+            <ListBox x:Name="TasksListBox"
+                    Background="#1E1E1E"
+                    BorderThickness="0"
+                    SelectionChanged="TasksListBox_SelectionChanged">
+
+                <ListBox.ItemTemplate>
+
+                    <DataTemplate>
+
+                        <Border Background="#2D2D30"
+                                CornerRadius="10"
+                                Padding="15"
+                                Margin="0 0 0 10">
+
+                            <StackPanel>
+
+                                <TextBlock Text="{Binding Title}"
+                                        FontSize="20"
+                                        FontWeight="Bold"
+                                        Foreground="White"/>
+
+                                <TextBlock Text="{Binding Description}"
+                                        Margin="0 5 0 5"
+                                        Foreground="#CCCCCC"/>
+
+                                <WrapPanel>
+
+                                    <TextBlock Text="Priority: "
+                                            Foreground="White"/>
+
+                                    <TextBlock Text="{Binding Priority}"
+                                            Foreground="Orange"/>
+
+                                    <TextBlock Text="   Type: "
+                                            Margin="15 0 0 0"
+                                            Foreground="White"/>
+
+                                    <TextBlock Text="{Binding Type}"
+                                            Foreground="LightBlue"/>
+
+                                </WrapPanel>
+
+                                <WrapPanel Margin="0 5 0 0">
+
+                                    <TextBlock Text="Deadline: "
+                                            Foreground="White"/>
+
+                                    <TextBlock Text="{Binding Deadline}"
+                                            Foreground="#8BC34A"/>
+
+                                </WrapPanel>
+
+                                <TextBlock Margin="0 10 0 0"
+                                        FontWeight="Bold">
+
+                                    <TextBlock.Style>
+
+                                        <Style TargetType="TextBlock">
+
+                                            <Setter Property="Text"
+                                                    Value="In Progress"/>
+
+                                            <Setter Property="Foreground"
+                                                    Value="Orange"/>
+
+                                            <Style.Triggers>
+
+                                                <DataTrigger Binding="{Binding IsCompleted}"
+                                                            Value="True">
+
+                                                    <Setter Property="Text"
+                                                            Value="Completed"/>
+
+                                                    <Setter Property="Foreground"
+                                                            Value="Lime"/>
+
+                                                </DataTrigger>
+
+                                            </Style.Triggers>
+
+                                        </Style>
+
+                                    </TextBlock.Style>
+
+                                </TextBlock>
+
+                            </StackPanel>
+
+                        </Border>
+
+                    </DataTemplate>
+
+                </ListBox.ItemTemplate>
+
+            </ListBox>
+
+        </Grid>
+
+    </Grid>
+
+</Window>
